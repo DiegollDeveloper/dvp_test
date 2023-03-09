@@ -1,6 +1,6 @@
 part of 'register_cubit.dart';
 
-class RegisterState extends Equatable {
+class RegisterState {
   final bool loadingPage;
   final bool dateSelected;
 
@@ -32,15 +32,10 @@ class RegisterState extends Equatable {
         lastNamesFocus: FocusNode(),
         dateOfBirth: DateTime.now(),
         addresses: [
-          // AddressModel(
-          //   type: "Carrera",
-          //   mainController: TextEditingController(text: "27"),
-          //   secundaryController: TextEditingController(text: "24"),
-          //   complementaryController: TextEditingController(text: "27"),
-          //   mainFocus: FocusNode(),
-          //   secundaryFocus: FocusNode(),
-          //   complementaryFocus: FocusNode(),
-          // )
+          AddressModel(
+            addressController: TextEditingController(),
+            addressFocus: FocusNode(),
+          ),
         ],
       );
 
@@ -61,15 +56,15 @@ class RegisterState extends Equatable {
         addresses: addresses ?? this.addresses,
       );
 
-  @override
-  List<Object> get props => [
-        loadingPage,
-        dateSelected,
-        namesController,
-        lastNamesController,
-        namesFocus,
-        lastNamesFocus,
-        dateOfBirth,
-        addresses,
-      ];
+  // @override
+  // List<Object> get props => [
+  //       loadingPage,
+  //       dateSelected,
+  //       namesController,
+  //       lastNamesController,
+  //       namesFocus,
+  //       lastNamesFocus,
+  //       dateOfBirth,
+  //       addresses,
+  //     ];
 }

@@ -9,3 +9,9 @@ class LoginExeption implements Exception {
 
   LoginExeption({required this.message});
 }
+
+class RegisterExeption implements Exception {
+  final String message;
+
+  RegisterExeption({required this.message});
+}

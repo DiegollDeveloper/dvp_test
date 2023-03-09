@@ -1,3 +1,4 @@
+import 'package:dvp_test/features/home/presentation/pages/home_screen.dart';
 import 'package:dvp_test/features/login/presentation/pages/login_page.dart';
 import 'package:dvp_test/features/register/presentation/pages/register_page.dart';
 import 'package:flutter/material.dart';
@@ -17,9 +18,9 @@ class _Page {
 
   static const Map<Routes, String> _pageMap = {
     Routes.initial: initial,
-    Routes.login: initial,
-    Routes.register: initial,
-    Routes.home: initial,
+    Routes.login: login,
+    Routes.register: register,
+    Routes.home: home,
   };
 
   static String? page(Routes routes) => _pageMap[routes];
@@ -47,6 +48,16 @@ class AppNavigator {
           page: const RegisterPage(),
           routeSettings: settings,
         );
+      case _Page.register:
+        return _pageRoute(
+          page: const RegisterPage(),
+          routeSettings: settings,
+        );
+      case _Page.home:
+        return _pageRoute(
+          page: const HomeScreen(),
+          routeSettings: settings,
+        );
       default:
         return _pageRoute(
           page: const LoginPage(),
@@ -54,4 +65,15 @@ class AppNavigator {
         );
     }
   }
+
+  static Future push<T>(Routes route, {Map<String, dynamic>? arguments}) =>
+      state.pushNamed(_Page.page(route)!, arguments: arguments);
+
+  static Future pushNamedAndRemoveUntil<T>(Routes route, {arguments}) =>
+      state.pushNamedAndRemoveUntil(_Page.page(route)!, (Route routes) => false,
+          arguments: arguments);
+
+  static void pop({Map<String, dynamic>? params}) => state.pop(params);
+
+  static void popToHome() => state.popUntil((route) => route.isFirst);
 }

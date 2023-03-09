@@ -1,14 +1,18 @@
-import 'package:dvp_test/core/utils/screen_size.dart';
-import 'package:dvp_test/core/widgets/custom_text_field.dart';
-import 'package:dvp_test/features/register/data/models/address_model.dart';
+import 'package:dvp_test/core/utils/in_app_notification.dart';
+import 'package:dvp_test/features/register/domain/usecases/register_user_data_use_case.dart';
+import 'package:dvp_test/navigator.dart';
 import 'package:flutter/material.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:dvp_test/features/register/data/models/address_model.dart';
 
 part 'register_state.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {
-  RegisterCubit() : super(RegisterState.initial());
+  final RegisterUserDataUseCase registerUserDataUseCase;
+
+  RegisterCubit({
+    required this.registerUserDataUseCase,
+  }) : super(RegisterState.initial());
 
   void onLoadPage() {}
 
@@ -35,129 +39,70 @@ class RegisterCubit extends Cubit<RegisterState> {
     }
   }
 
-  void addressDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (dialogContext) {
-        return Dialog(
-          backgroundColor: Colors.grey[200]!,
-          child: Padding(
-            padding: EdgeInsets.only(
-              top: ScreenSize.height(dialogContext) * 0.025,
-              left: ScreenSize.width(dialogContext) * 0.05,
-              right: ScreenSize.width(dialogContext) * 0.05,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: Text(
-                    "Añadir nueva dirección",
-                    style: TextStyle(
-                      fontSize: ScreenSize.width(context) * 0.045,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.purple,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 30),
-                CustomTextField(
-                  heightConstant: 0.05,
-                  label: "",
-                  hint: "Ciudad",
-                  controller: TextEditingController(),
-                  focus: FocusNode(),
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    Container(
-                      height: ScreenSize.height(context) * 0.05,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                      ),
-                      alignment: Alignment.centerLeft,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey[300]!,
-                            blurRadius: 0.5,
-                          )
-                        ],
-                      ),
-                      child: DropdownButton(
-                        value: "Carrera",
-                        onChanged: (val) {},
-                        items: const [
-                          DropdownMenuItem(
-                            value: "Calle",
-                            child: Text("Calle"),
-                          ),
-                          DropdownMenuItem(
-                            value: "Carrera",
-                            child: Text("Carrera"),
-                          ),
-                          DropdownMenuItem(
-                            value: "Avenida",
-                            child: Text("Avenida"),
-                          ),
-                        ],
-                        // icon: const SizedBox(),
-                        underline: const SizedBox(),
-                        style: TextStyle(
-                          color: Colors.grey[700]!,
-                          fontSize: ScreenSize.width(context) * 0.041,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Flexible(
-                      child: CustomTextField(
-                        heightConstant: 0.05,
-                        label: "",
-                        hint: "",
-                        controller: TextEditingController(),
-                        focus: FocusNode(),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    Text("#"),
-                    const SizedBox(width: 10),
-                    Flexible(
-                      child: CustomTextField(
-                        heightConstant: 0.05,
-                        label: "",
-                        hint: "",
-                        controller: TextEditingController(),
-                        focus: FocusNode(),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Text("-"),
-                    const SizedBox(width: 10),
-                    Flexible(
-                      child: CustomTextField(
-                        heightConstant: 0.05,
-                        label: "",
-                        hint: "",
-                        controller: TextEditingController(),
-                        focus: FocusNode(),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-              ],
-            ),
-          ),
-        );
-      },
+  void onAddAddressButtonTap() {
+    state.addresses.add(
+      AddressModel(
+        addressController: TextEditingController(),
+        addressFocus: FocusNode(),
+      ),
     );
+    emit(state.copyWith());
+  }
+
+  void onRemoveAddressButtonTap(int addressIndex) {
+    state.addresses.removeAt(addressIndex);
+    emit(state.copyWith());
+  }
+
+  bool validateAddresses() {
+    return state.addresses
+        .any((element) => element.addressController.text.isEmpty);
+  }
+
+  bool validateRegisterFields(BuildContext? context) {
+    if (state.namesController.text.isEmpty) {
+      InAppNotification.show(
+        context: context,
+        message: "Debes agregar tu nombre",
+        type: NotificationType.warning,
+      );
+      return false;
+    } else if (state.lastNamesController.text.isEmpty) {
+      InAppNotification.show(
+        context: context,
+        message: "Debes agregar tus apellidos",
+        type: NotificationType.warning,
+      );
+      return false;
+    } else if (!state.dateSelected) {
+      InAppNotification.show(
+        context: context,
+        message: "Debes agregar tu fecha de nacimiento",
+        type: NotificationType.warning,
+      );
+      return false;
+    } else if (state.addresses.length == 1 &&
+        state.addresses.first.addressController.text.isEmpty) {
+      InAppNotification.show(
+        context: context,
+        message: "Debes agregar tu dirección",
+        type: NotificationType.warning,
+      );
+      return false;
+    } else if (validateAddresses()) {
+      InAppNotification.show(
+        context: context,
+        message: "Debes completar todas las direcciones",
+        type: NotificationType.warning,
+      );
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  void registerUserData(BuildContext? context) {
+    if (!validateRegisterFields(context)) return;
+    AppNavigator.pushNamedAndRemoveUntil(Routes.home);
   }
 }

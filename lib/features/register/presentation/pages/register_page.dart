@@ -17,124 +17,115 @@ class RegisterPage extends BaseScreen<RegisterState, RegisterCubit> {
   Widget buildScreen(
       BuildContext context, RegisterCubit bloc, RegisterState state) {
     return Scaffold(
-      backgroundColor: Colors.grey[200]!,
-      body: Padding(
-        padding: EdgeInsets.only(
-          top: ScreenSize.height(context) * 0.1,
-          left: ScreenSize.width(context) * 0.1,
-          right: ScreenSize.width(context) * 0.1,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Registrate completando los siguientes campos",
-              style: TextStyle(
-                fontSize: ScreenSize.width(context) * 0.075,
-                fontWeight: FontWeight.bold,
-                color: Colors.purple,
+      backgroundColor: Colors.grey[300]!,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.only(
+            top: ScreenSize.height(context) * 0.1,
+            bottom: ScreenSize.height(context) * 0.05,
+            left: ScreenSize.width(context) * 0.1,
+            right: ScreenSize.width(context) * 0.1,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Registrate completando los siguientes campos",
+                style: TextStyle(
+                  fontSize: ScreenSize.width(context) * 0.075,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.purple,
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 40,
-            ),
-            CustomTextField(
-              label: "Nombres",
-              controller: state.namesController,
-              focus: state.namesFocus,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            CustomTextField(
-              label: "Apellidos",
-              controller: state.lastNamesController,
-              focus: state.lastNamesFocus,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            CustomDateField(
-              label: "Fecha de nacimiento",
-              date: state.dateSelected
-                  ? CommonFunctions.formartDateOfBirth(state.dateOfBirth)
-                  : null,
-              onTap: (context) => bloc.selectDateOfBirth(context),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            GestureDetector(
-              onTap: () => bloc.addressDialog(context),
-              child: Container(
-                height: ScreenSize.height(context) * 0.075,
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
+              const SizedBox(
+                height: 40,
+              ),
+              CustomTextField(
+                label: "Nombres",
+                controller: state.namesController,
+                focus: state.namesFocus,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              CustomTextField(
+                label: "Apellidos",
+                controller: state.lastNamesController,
+                focus: state.lastNamesFocus,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              CustomDateField(
+                label: "Fecha de nacimiento",
+                date: state.dateSelected
+                    ? CommonFunctions.formartDateOfBirth(state.dateOfBirth)
+                    : null,
+                onTap: (context) => bloc.selectDateOfBirth(context),
+              ),
+              const SizedBox(height: 20),
+              ListView.builder(
+                primary: false,
+                padding: EdgeInsets.zero,
+                itemCount: state.addresses.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) => Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: Row(
+                    children: [
+                      Flexible(
+                        child: CustomTextField(
+                          label:
+                              "Dirección${(state.addresses.length > 1) ? " ${index + 1}" : ""}",
+                          controller: state.addresses[index].addressController,
+                          focus: state.addresses[index].addressFocus,
+                        ),
+                      ),
+                      if (index != 0)
+                        IconButton(
+                          onPressed: () => bloc.onRemoveAddressButtonTap(index),
+                          icon: const Icon(
+                            Icons.remove,
+                            color: Colors.purple,
+                          ),
+                        )
+                    ],
+                  ),
                 ),
-                alignment: Alignment.centerLeft,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey[300]!,
-                      blurRadius: 0.5,
-                    )
-                  ],
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Dirección",
+              ),
+              if (state.addresses.length < 4)
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: () => bloc.onAddAddressButtonTap(),
+                    child: Text(
+                      "Añadir nueva dirección",
                       style: TextStyle(
-                        color: state.addresses.isEmpty
-                            ? Colors.grey[700]!
-                            : Colors.purple,
-                        fontSize: ScreenSize.width(context) *
-                            ((state.addresses.isEmpty) ? 0.041 : 0.034),
+                        color: Colors.purple,
+                        fontSize: ScreenSize.width(context) * 0.04,
                       ),
                     ),
-                    // Row(
-                    //   children: [
-                    //     DropdownButton(
-                    //       value: "Carrera",
-                    //       onChanged: (val) {},
-                    //       items: const [
-                    //         DropdownMenuItem(
-                    //           value: "Calle",
-                    //           child: Text("Calle"),
-                    //         ),
-                    //         DropdownMenuItem(
-                    //           value: "Carrera",
-                    //           child: Text("Carrera"),
-                    //         ),
-                    //         DropdownMenuItem(
-                    //           value: "Avenida",
-                    //           child: Text("Avenida"),
-                    //         ),
-                    //       ],
-                    //       icon: const SizedBox(),
-                    //       underline: const SizedBox(),
-                    //       style: TextStyle(
-                    //         color: Colors.grey[700]!,
-                    //         fontSize: ScreenSize.width(context) * 0.041,
-                    //       ),
-                    //     ),
-                    //     Flexible(child: TextField()),
-                    //     Text("#"),
-                    //     Flexible(child: TextField()),
-                    //     Text("-"),
-                    //     Flexible(child: TextField()),
-                    //   ],
-                    // ),
-                  ],
+                  ),
                 ),
-              ),
-            )
-          ],
+              const SizedBox(height: 50),
+              SizedBox(
+                width: double.infinity,
+                height: ScreenSize.height(context) * 0.06,
+                child: ElevatedButton(
+                  onPressed: () => bloc.registerUserData(context),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.purple,
+                  ),
+                  child: Text(
+                    "Registrarme",
+                    style: TextStyle(
+                      fontSize: ScreenSize.width(context) * 0.04,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

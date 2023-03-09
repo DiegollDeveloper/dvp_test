@@ -10,3 +10,9 @@ class LoginFailure extends Failure {
 
   LoginFailure({required this.message});
 }
+
+class RegisterFailure extends Failure {
+  final String message;
+
+  RegisterFailure({required this.message});
+}
