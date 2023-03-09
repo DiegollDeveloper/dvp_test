@@ -15,3 +15,9 @@ class RegisterExeption implements Exception {
 
   RegisterExeption({required this.message});
 }
+
+class HomeExeption implements Exception {
+  final String message;
+
+  HomeExeption({required this.message});
+}

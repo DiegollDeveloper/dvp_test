@@ -1,6 +1,8 @@
 import 'package:dvp_test/core/utils/common_functions.dart';
+import 'package:dvp_test/core/widgets/custom_button.dart';
 import 'package:dvp_test/core/widgets/custom_text_field.dart';
 import 'package:dvp_test/features/register/presentation/widgets/custom_date_field.dart';
+import 'package:dvp_test/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:dvp_test/core/utils/screen_size.dart';
 import 'package:dvp_test/core/helpers/base_screen.dart';
@@ -21,7 +23,7 @@ class RegisterPage extends BaseScreen<RegisterState, RegisterCubit> {
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.only(
-            top: ScreenSize.height(context) * 0.1,
+            top: ScreenSize.height(context) * 0.08,
             bottom: ScreenSize.height(context) * 0.05,
             left: ScreenSize.width(context) * 0.1,
             right: ScreenSize.width(context) * 0.1,
@@ -29,6 +31,16 @@ class RegisterPage extends BaseScreen<RegisterState, RegisterCubit> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              IconButton(
+                padding: EdgeInsets.zero,
+                visualDensity: VisualDensity.compact,
+                onPressed: () => AppNavigator.pop(),
+                icon: const Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.purple,
+                ),
+              ),
+              const SizedBox(height: 10),
               Text(
                 "Registrate completando los siguientes campos",
                 style: TextStyle(
@@ -37,9 +49,7 @@ class RegisterPage extends BaseScreen<RegisterState, RegisterCubit> {
                   color: Colors.purple,
                 ),
               ),
-              const SizedBox(
-                height: 40,
-              ),
+              const SizedBox(height: 40),
               CustomTextField(
                 label: "Nombres",
                 controller: state.namesController,
@@ -108,21 +118,10 @@ class RegisterPage extends BaseScreen<RegisterState, RegisterCubit> {
                   ),
                 ),
               const SizedBox(height: 50),
-              SizedBox(
-                width: double.infinity,
-                height: ScreenSize.height(context) * 0.06,
-                child: ElevatedButton(
-                  onPressed: () => bloc.registerUserData(context),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.purple,
-                  ),
-                  child: Text(
-                    "Registrarme",
-                    style: TextStyle(
-                      fontSize: ScreenSize.width(context) * 0.04,
-                    ),
-                  ),
-                ),
+              CustomButton(
+                onTap: () => bloc.registerUserData(context),
+                loading: state.registeringUserData,
+                text: "Registrarme",
               )
             ],
           ),

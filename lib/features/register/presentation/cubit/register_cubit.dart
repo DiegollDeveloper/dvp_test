@@ -1,9 +1,11 @@
-import 'package:dvp_test/core/utils/in_app_notification.dart';
-import 'package:dvp_test/features/register/domain/usecases/register_user_data_use_case.dart';
-import 'package:dvp_test/navigator.dart';
+import 'package:dvp_test/core/utils/common_functions.dart';
+import 'package:dvp_test/features/register/data/models/register_data_body.dart';
 import 'package:flutter/material.dart';
+import 'package:dvp_test/navigator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:dvp_test/core/utils/in_app_notification.dart';
 import 'package:dvp_test/features/register/data/models/address_model.dart';
+import 'package:dvp_test/features/register/domain/usecases/register_user_data_use_case.dart';
 
 part 'register_state.dart';
 
@@ -101,8 +103,30 @@ class RegisterCubit extends Cubit<RegisterState> {
     }
   }
 
-  void registerUserData(BuildContext? context) {
+  Future<void> registerUserData(BuildContext? context) async {
     if (!validateRegisterFields(context)) return;
-    AppNavigator.pushNamedAndRemoveUntil(Routes.home);
+    emit(state.copyWith(registeringUserData: true));
+    final result = await registerUserDataUseCase(
+      RegisterDataBody(
+        names: state.namesController.text,
+        lastName: state.namesController.text,
+        dateOfBirth: CommonFunctions.formartDateOfBirth(state.dateOfBirth),
+        addresses: CommonFunctions.getAddressesListString(state.addresses),
+      ),
+    );
+    emit(state.copyWith(registeringUserData: false));
+    result.fold(
+      (l) => InAppNotification.show(
+        context: context,
+        title: "Ocurrión un error",
+        message: "Intenta registrarte nuevamente",
+        type: NotificationType.error,
+      ),
+      (r) {
+        if (context != null) {
+          AppNavigator.pushNamedAndRemoveUntil(Routes.home);
+        }
+      },
+    );
   }
 }

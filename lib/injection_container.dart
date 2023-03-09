@@ -1,6 +1,7 @@
 import 'package:dvp_test/features/home/data/datasources/home_data_source.dart';
 import 'package:dvp_test/features/home/domain/repositories/home_repository.dart';
 import 'package:dvp_test/features/home/domain/usecases/get_user_data_use_case.dart';
+import 'package:dvp_test/features/home/domain/usecases/sign_out_use_case.dart';
 import 'package:dvp_test/features/home/presentation/cubit/home_cubit.dart';
 import 'package:dvp_test/features/login/presentation/cubit/login_cubit.dart';
 import 'package:dvp_test/features/register/data/datasources/register_data_source.dart';
@@ -26,13 +27,15 @@ init() async {
 void registerBlocs() {
   sl.registerFactory(() => LoginCubit());
   sl.registerFactory(() => RegisterCubit(registerUserDataUseCase: sl()));
-  sl.registerFactory(() => HomeCubit(getUserDataUseCase: sl()));
+  sl.registerFactory(
+      () => HomeCubit(getUserDataUseCase: sl(), signOutUseCase: sl()));
 }
 
 void registerUseCases() {
   sl.registerLazySingleton(
       () => RegisterUserDataUseCase(registerRepository: sl()));
   sl.registerLazySingleton(() => GetUserDataUseCase(homeRepository: sl()));
+  sl.registerLazySingleton(() => SignOutUseCase(homeRepository: sl()));
 }
 
 void registerRepositories() {

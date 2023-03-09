@@ -1,4 +1,4 @@
-import 'package:dvp_test/features/home/presentation/pages/home_screen.dart';
+import 'package:dvp_test/features/home/presentation/pages/home_page.dart';
 import 'package:dvp_test/features/login/presentation/pages/login_page.dart';
 import 'package:dvp_test/features/register/presentation/pages/register_page.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +45,7 @@ class AppNavigator {
     switch (settings.name) {
       case _Page.initial:
         return _pageRoute(
-          page: const RegisterPage(),
+          page: const LoginPage(),
           routeSettings: settings,
         );
       case _Page.register:
