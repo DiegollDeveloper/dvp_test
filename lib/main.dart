@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       onGenerateRoute: AppNavigator.generateRoute,
+      locale: const Locale('es', 'ES'),
     );
   }
 }

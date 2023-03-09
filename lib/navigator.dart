@@ -1,4 +1,5 @@
 import 'package:dvp_test/features/login/presentation/pages/login_page.dart';
+import 'package:dvp_test/features/register/presentation/pages/register_page.dart';
 import 'package:flutter/material.dart';
 
 enum Routes {
@@ -43,7 +44,7 @@ class AppNavigator {
     switch (settings.name) {
       case _Page.initial:
         return _pageRoute(
-          page: const LoginPage(),
+          page: const RegisterPage(),
           routeSettings: settings,
         );
       default:

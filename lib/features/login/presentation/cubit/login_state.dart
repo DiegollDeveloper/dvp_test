@@ -1,10 +1,23 @@
 part of 'login_cubit.dart';
 
-abstract class LoginState extends Equatable {
-  const LoginState();
+class LoginState extends Equatable {
+  final bool loadingPage;
+
+  const LoginState({
+    required this.loadingPage,
+  });
+
+  factory LoginState.initial() => const LoginState(
+        loadingPage: false,
+      );
+
+  LoginState copyWith({
+    bool? loadingPage,
+  }) =>
+      LoginState(
+        loadingPage: loadingPage ?? this.loadingPage,
+      );
 
   @override
   List<Object> get props => [];
 }
-
-class LoginInitial extends LoginState {}
