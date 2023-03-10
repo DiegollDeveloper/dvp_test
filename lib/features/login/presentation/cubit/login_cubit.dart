@@ -1,28 +1,33 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:dvp_test/core/utils/common_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:dvp_test/navigator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:dvp_test/core/use_case/use_case.dart';
+import 'package:dvp_test/core/utils/common_functions.dart';
 import 'package:dvp_test/core/utils/common_constants.dart';
 import 'package:dvp_test/core/utils/in_app_notification.dart';
 import 'package:dvp_test/features/login/data/models/sign_in_data_body.dart';
 import 'package:dvp_test/features/login/domain/usecases/sign_in_use_case.dart';
 import 'package:dvp_test/features/login/data/models/sign_in_data_response.dart';
+import 'package:dvp_test/features/login/domain/usecases/fetch_recent_email_use_case.dart';
 import 'package:dvp_test/features/login/domain/usecases/fetch_registered_email_use_case.dart';
-
 part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
-  final FetchRegisteredEmailUseCase fetchRegisteredEmailUseCase;
   final SignInUseCase signInUseCase;
+  final FetchRegisteredEmailUseCase fetchRegisteredEmailUseCase;
+  final FetchRecentEmailUseCase fetchRecentEmailUseCase;
 
   LoginCubit({
-    required this.fetchRegisteredEmailUseCase,
     required this.signInUseCase,
+    required this.fetchRegisteredEmailUseCase,
+    required this.fetchRecentEmailUseCase,
   }) : super(LoginState.initial());
 
-  void onLoadPage() {}
+  void onLoadPage() {
+    fetchRecentEmail();
+  }
 
   void onRegisterTextTap() {
     AppNavigator.push(Routes.register);
@@ -57,6 +62,17 @@ class LoginCubit extends Cubit<LoginState> {
       return false;
     }
     return true;
+  }
+
+  Future<void> fetchRecentEmail() async {
+    final result = await fetchRecentEmailUseCase(NoParams());
+    result.fold(
+      (l) => null,
+      (r) {
+        state.emailController.text = r;
+        emit(state.copyWith());
+      },
+    );
   }
 
   Future<bool?> fetchRegisteredEmail(BuildContext? context) async {

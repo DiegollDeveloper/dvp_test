@@ -1,7 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:dvp_test/core/utils/app_colors.dart';
 import 'package:dvp_test/core/utils/screen_size.dart';
 import 'package:dvp_test/core/widgets/custom_button.dart';
-import 'package:flutter/material.dart';
 
 class DataErrorScreen extends StatelessWidget {
   final Function onRetry;

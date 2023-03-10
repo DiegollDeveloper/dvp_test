@@ -7,6 +7,7 @@ import 'package:dvp_test/features/register/presentation/cubit/register_cubit.dar
 import 'package:dvp_test/features/login/domain/usecases/sign_in_use_case.dart';
 import 'package:dvp_test/features/home/domain/usecases/sign_out_use_case.dart';
 import 'package:dvp_test/features/home/domain/usecases/get_user_data_use_case.dart';
+import 'package:dvp_test/features/login/domain/usecases/fetch_recent_email_use_case.dart';
 import 'package:dvp_test/features/register/domain/usecases/register_user_data_use_case.dart';
 import 'package:dvp_test/features/login/domain/usecases/fetch_registered_email_use_case.dart';
 
@@ -32,8 +33,10 @@ init() async {
 }
 
 void registerBlocs() {
-  sl.registerFactory(
-      () => LoginCubit(fetchRegisteredEmailUseCase: sl(), signInUseCase: sl()));
+  sl.registerFactory(() => LoginCubit(
+      fetchRegisteredEmailUseCase: sl(),
+      signInUseCase: sl(),
+      fetchRecentEmailUseCase: sl()));
   sl.registerFactory(() => RegisterCubit(
       registerUserDataUseCase: sl(), fetchRegisteredEmailUseCase: sl()));
   sl.registerFactory(
@@ -44,6 +47,8 @@ void registerUseCases() {
   sl.registerLazySingleton(
       () => FetchRegisteredEmailUseCase(loginRepository: sl()));
   sl.registerLazySingleton(() => SignInUseCase(loginRepository: sl()));
+  sl.registerLazySingleton(
+      () => FetchRecentEmailUseCase(loginRepository: sl()));
   sl.registerLazySingleton(
       () => RegisterUserDataUseCase(registerRepository: sl()));
   sl.registerLazySingleton(() => GetUserDataUseCase(homeRepository: sl()));

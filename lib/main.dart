@@ -1,13 +1,13 @@
-import 'package:crypto_simple/crypto_simple.dart';
-import 'package:dvp_test/core/keys/keys.dart';
-import 'package:dvp_test/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:dvp_test/navigator.dart';
 import 'package:flutter/services.dart';
 import 'injection_container.dart' as di;
+import 'package:dvp_test/navigator.dart';
+import 'package:dvp_test/core/keys/keys.dart';
+import 'package:crypto_simple/crypto_simple.dart';
+import 'package:dvp_test/core/utils/app_colors.dart';
 
 Future<void> main() async {
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   CryptoSimple(superKey: Keys.encryptSuperKey, subKey: Keys.encryptSubKey);
   await di.init();

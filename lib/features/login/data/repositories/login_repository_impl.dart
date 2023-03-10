@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:dvp_test/core/errors/failures.dart';
 import 'package:dvp_test/core/errors/exceptions.dart';
+import 'package:dvp_test/core/use_case/use_case.dart';
 import 'package:dvp_test/features/login/data/models/sign_in_data_body.dart';
 import 'package:dvp_test/features/login/data/models/sign_in_data_response.dart';
 import 'package:dvp_test/features/login/data/datasources/login_data_source.dart';
@@ -27,6 +28,17 @@ class LoginRepositoryImpl extends LoginRepository {
       {required String params}) async {
     try {
       final result = await loginDataSource.fetchRegisteredEmail(email: params);
+      return Right(result);
+    } on LoginExeption catch (e) {
+      return Left(LoginFailure(message: e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> fetchRecentEmail(
+      {required NoParams params}) async {
+    try {
+      final result = await loginDataSource.fetchRecentEmail(params: params);
       return Right(result);
     } on LoginExeption catch (e) {
       return Left(LoginFailure(message: e.message));

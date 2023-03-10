@@ -1,23 +1,20 @@
+import 'package:flutter/material.dart';
 import 'package:dvp_test/features/home/presentation/pages/home_page.dart';
 import 'package:dvp_test/features/login/presentation/pages/login_page.dart';
 import 'package:dvp_test/features/register/presentation/pages/register_page.dart';
-import 'package:flutter/material.dart';
 
 enum Routes {
-  initial,
   login,
   register,
   home,
 }
 
 class _Page {
-  static const String initial = "/";
-  static const String login = "login";
+  static const String login = "/";
   static const String register = "register";
   static const String home = "home";
 
   static const Map<Routes, String> _pageMap = {
-    Routes.initial: initial,
     Routes.login: login,
     Routes.register: register,
     Routes.home: home,
@@ -43,7 +40,7 @@ class AppNavigator {
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case _Page.initial:
+      case _Page.login:
         return _pageRoute(
           page: const LoginPage(),
           routeSettings: settings,

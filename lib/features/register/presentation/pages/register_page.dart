@@ -1,14 +1,15 @@
-import 'package:dvp_test/core/utils/app_colors.dart';
-import 'package:dvp_test/core/utils/common_functions.dart';
-import 'package:dvp_test/core/widgets/custom_button.dart';
-import 'package:dvp_test/core/widgets/custom_text_field.dart';
-import 'package:dvp_test/features/register/presentation/widgets/custom_date_field.dart';
-import 'package:dvp_test/navigator.dart';
 import 'package:flutter/material.dart';
+import 'package:dvp_test/navigator.dart';
+import 'package:dvp_test/injection_container.dart';
+import 'package:dvp_test/core/utils/app_colors.dart';
 import 'package:dvp_test/core/utils/screen_size.dart';
 import 'package:dvp_test/core/helpers/base_screen.dart';
+import 'package:dvp_test/core/widgets/custom_button.dart';
+import 'package:dvp_test/core/utils/common_functions.dart';
+import 'package:dvp_test/core/widgets/custom_text_field.dart';
+import 'package:dvp_test/features/register/presentation/pages/addresses_list.dart';
+import 'package:dvp_test/features/register/presentation/widgets/custom_date_field.dart';
 import 'package:dvp_test/features/register/presentation/cubit/register_cubit.dart';
-import 'package:dvp_test/injection_container.dart';
 
 class RegisterPage extends BaseScreen<RegisterState, RegisterCubit> {
   const RegisterPage({super.key});
@@ -79,37 +80,10 @@ class RegisterPage extends BaseScreen<RegisterState, RegisterCubit> {
                   onTap: (context) => bloc.selectDateOfBirth(context),
                 ),
                 const SizedBox(height: 20),
-                ListView.builder(
-                  primary: false,
-                  padding: EdgeInsets.zero,
-                  itemCount: state.addresses.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) => Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: Row(
-                      children: [
-                        Flexible(
-                          child: CustomTextField(
-                            label:
-                                "Dirección${(state.addresses.length > 1) ? " ${index + 1}" : ""}",
-                            controller:
-                                state.addresses[index].addressController,
-                            focus: state.addresses[index].addressFocus,
-                            type: TextFieldType.text,
-                          ),
-                        ),
-                        if (index != 0)
-                          IconButton(
-                            onPressed: () =>
-                                bloc.onRemoveAddressButtonTap(index),
-                            icon: Icon(
-                              Icons.remove,
-                              color: AppColors.primary,
-                            ),
-                          )
-                      ],
-                    ),
-                  ),
+                AddressesList(
+                  addresses: state.addresses,
+                  onRemoveAddressTap: (index) =>
+                      bloc.onRemoveAddressButtonTap(index),
                 ),
                 if (state.addresses.length < 4)
                   Align(

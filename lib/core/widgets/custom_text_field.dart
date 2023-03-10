@@ -1,7 +1,7 @@
-import 'package:dvp_test/core/utils/app_colors.dart';
-import 'package:dvp_test/core/utils/common_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:dvp_test/core/utils/app_colors.dart';
 import 'package:dvp_test/core/utils/screen_size.dart';
+import 'package:dvp_test/core/utils/common_constants.dart';
 
 class CustomTextField extends StatelessWidget {
   final bool hidePassword;

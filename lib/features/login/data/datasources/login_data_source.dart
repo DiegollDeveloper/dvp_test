@@ -1,13 +1,15 @@
 import 'dart:convert';
 import 'package:dvp_test/core/errors/exceptions.dart';
+import 'package:dvp_test/core/use_case/use_case.dart';
 import 'package:dvp_test/core/utils/common_functions.dart';
-import 'package:dvp_test/features/login/data/models/sign_in_data_response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:dvp_test/features/login/data/models/sign_in_data_response.dart';
 import 'package:dvp_test/features/login/data/models/sign_in_data_body.dart';
 
 abstract class LoginDataSource {
   Future<SignInDataResponse> signIn({required SignInDataBody loginData});
   Future<bool> fetchRegisteredEmail({required String email});
+  Future<String> fetchRecentEmail({required NoParams params});
 }
 
 class LoginDataSourceImpl extends LoginDataSource {
@@ -43,5 +45,14 @@ class LoginDataSourceImpl extends LoginDataSource {
     String userData = sharedPreferences.getString(email)!;
     Map<String, dynamic> decodedUserData = json.decode(userData);
     return CommonFunctions.decryptedText(decodedUserData["password"]);
+  }
+
+  @override
+  Future<String> fetchRecentEmail({required NoParams params}) async {
+    try {
+      return sharedPreferences.getString("recentEmail") ?? "";
+    } catch (e) {
+      throw LoginExeption(message: "Fetch registered email error");
+    }
   }
 }
