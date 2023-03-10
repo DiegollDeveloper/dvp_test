@@ -44,7 +44,4 @@ class LoginState {
         emailFocus: emailFocus,
         passwordFocus: passwordFocus,
       );
-
-  // @override
-  // List<Object> get props => [];
 }

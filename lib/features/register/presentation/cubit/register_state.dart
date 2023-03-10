@@ -94,16 +94,4 @@ class RegisterState {
         dateOfBirth: dateOfBirth ?? this.dateOfBirth,
         addresses: addresses ?? this.addresses,
       );
-
-  // @override
-  // List<Object> get props => [
-  //       loadingPage,
-  //       dateSelected,
-  //       namesController,
-  //       lastNamesController,
-  //       namesFocus,
-  //       lastNamesFocus,
-  //       dateOfBirth,
-  //       addresses,
-  //     ];
 }
