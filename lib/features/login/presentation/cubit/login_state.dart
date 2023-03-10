@@ -2,6 +2,8 @@ part of 'login_cubit.dart';
 
 class LoginState {
   final bool loadingPage;
+  final bool joinning;
+  final bool hidePassword;
 
   final TextEditingController emailController;
   final TextEditingController passwordController;
@@ -10,6 +12,8 @@ class LoginState {
 
   const LoginState({
     required this.loadingPage,
+    required this.joinning,
+    required this.hidePassword,
     required this.emailController,
     required this.passwordController,
     required this.emailFocus,
@@ -18,6 +22,8 @@ class LoginState {
 
   factory LoginState.initial() => LoginState(
         loadingPage: false,
+        joinning: false,
+        hidePassword: true,
         emailController: TextEditingController(),
         passwordController: TextEditingController(),
         emailFocus: FocusNode(),
@@ -26,9 +32,13 @@ class LoginState {
 
   LoginState copyWith({
     bool? loadingPage,
+    bool? joinning,
+    bool? hidePassword,
   }) =>
       LoginState(
         loadingPage: loadingPage ?? this.loadingPage,
+        joinning: joinning ?? this.joinning,
+        hidePassword: hidePassword ?? this.hidePassword,
         emailController: emailController,
         passwordController: passwordController,
         emailFocus: emailFocus,

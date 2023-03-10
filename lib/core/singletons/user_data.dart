@@ -7,12 +7,14 @@ class UserData {
   late String lastNames;
   late String dateOfBirth;
   late List<String> addresses;
+  late String email;
 
   UserData._internal() {
     names = "";
     lastNames = "";
     dateOfBirth = "";
     addresses = [];
+    email = "";
   }
 
   void clearData() {
@@ -20,6 +22,7 @@ class UserData {
     lastNames = "";
     dateOfBirth = "";
     addresses = [];
+    email = "";
   }
 
   UserData copyWith({
@@ -27,11 +30,13 @@ class UserData {
     String? lastNames,
     String? dateOfBirth,
     List<String>? addresses,
+    String? email,
   }) {
     _instance.names = names ?? this.names;
     _instance.lastNames = lastNames ?? this.lastNames;
     _instance.dateOfBirth = dateOfBirth ?? this.dateOfBirth;
     _instance.addresses = addresses ?? this.addresses;
+    _instance.email = email ?? this.email;
     return _instance;
   }
 }

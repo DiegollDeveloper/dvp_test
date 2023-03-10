@@ -55,7 +55,7 @@ class AppNavigator {
         );
       case _Page.home:
         return _pageRoute(
-          page: const HomeScreen(),
+          page: HomeScreen(params: settings.arguments as Map<String, dynamic>),
           routeSettings: settings,
         );
       default:
@@ -69,7 +69,8 @@ class AppNavigator {
   static Future push<T>(Routes route, {Map<String, dynamic>? arguments}) =>
       state.pushNamed(_Page.page(route)!, arguments: arguments);
 
-  static Future pushNamedAndRemoveUntil<T>(Routes route, {arguments}) =>
+  static Future pushNamedAndRemoveUntil<T>(Routes route,
+          {Map<String, dynamic>? arguments}) =>
       state.pushNamedAndRemoveUntil(_Page.page(route)!, (Route routes) => false,
           arguments: arguments);
 

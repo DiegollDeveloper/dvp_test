@@ -1,28 +1,27 @@
-import 'package:dvp_test/core/utils/screen_size.dart';
 import 'package:flutter/material.dart';
+import 'package:dvp_test/core/utils/screen_size.dart';
 
 class CustomTextField extends StatelessWidget {
-  final double heightConstant;
+  final bool hidePassword;
   final String label;
-  final String? hint;
   final TextEditingController controller;
   final FocusNode focus;
-  final TextInputType type;
+  final TextFieldType type;
+  final Function? onSuffixTap;
 
-  const CustomTextField({
-    super.key,
-    this.heightConstant = 0.075,
-    required this.label,
-    required this.controller,
-    required this.focus,
-    this.hint,
-    this.type = TextInputType.text,
-  });
+  const CustomTextField(
+      {super.key,
+      this.hidePassword = false,
+      required this.label,
+      required this.controller,
+      required this.focus,
+      required this.type,
+      this.onSuffixTap});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ScreenSize.height(context) * heightConstant,
+      height: ScreenSize.height(context) * 0.075,
       padding: const EdgeInsets.symmetric(
         horizontal: 10,
       ),
@@ -37,13 +36,18 @@ class CustomTextField extends StatelessWidget {
         ],
       ),
       child: TextField(
+        onEditingComplete: () => focus.nextFocus(),
         controller: controller,
         focusNode: focus,
         cursorColor: Colors.purple,
-        keyboardType: type,
+        keyboardType: type == TextFieldType.text
+            ? TextInputType.text
+            : type == TextFieldType.email
+                ? TextInputType.emailAddress
+                : TextInputType.visiblePassword,
+        obscureText: hidePassword,
         decoration: InputDecoration(
           labelText: label == "" ? null : label,
-          hintText: hint,
           labelStyle: TextStyle(
             color: Colors.grey[700]!,
             fontSize: ScreenSize.width(context) * 0.041,
@@ -52,8 +56,24 @@ class CustomTextField extends StatelessWidget {
             color: Colors.purple,
           ),
           border: InputBorder.none,
+          suffixIcon: type == TextFieldType.password
+              ? GestureDetector(
+                  onTap: onSuffixTap != null ? () => onSuffixTap!() : null,
+                  child: Icon(
+                    (hidePassword)
+                        ? Icons.remove_red_eye_outlined
+                        : Icons.remove_red_eye_rounded,
+                  ),
+                )
+              : null,
         ),
       ),
     );
   }
+}
+
+enum TextFieldType {
+  text,
+  email,
+  password,
 }

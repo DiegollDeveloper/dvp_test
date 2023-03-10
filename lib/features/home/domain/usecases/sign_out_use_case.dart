@@ -3,7 +3,7 @@ import 'package:dvp_test/core/errors/failures.dart';
 import 'package:dvp_test/core/use_case/use_case.dart';
 import 'package:dvp_test/features/home/domain/repositories/home_repository.dart';
 
-class SignOutUseCase extends UseCase<bool, NoParams> {
+class SignOutUseCase extends UseCase<bool, String> {
   final HomeRepository homeRepository;
 
   SignOutUseCase({required this.homeRepository});

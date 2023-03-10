@@ -8,17 +8,22 @@ import 'package:dvp_test/core/helpers/base_screen.dart';
 import 'package:dvp_test/features/home/presentation/cubit/home_cubit.dart';
 
 class HomeScreen extends BaseScreen<HomeState, HomeCubit> {
-  const HomeScreen({super.key});
+  final Map<String, dynamic> params;
+
+  const HomeScreen({
+    super.key,
+    required this.params,
+  });
 
   @override
-  HomeCubit createBloc() => sl<HomeCubit>()..onLoadPage();
+  HomeCubit createBloc() => sl<HomeCubit>()..onLoadPage(params);
 
   @override
   Widget buildScreen(BuildContext context, HomeCubit bloc, HomeState state) {
     return Scaffold(
       body: (state.dataError)
           ? DataErrorScreen(
-              onRetry: () async => bloc.onLoadPage(),
+              onRetry: () async => bloc.onLoadPage(params),
             )
           : Padding(
               padding: EdgeInsets.only(
@@ -66,12 +71,12 @@ class HomeScreen extends BaseScreen<HomeState, HomeCubit> {
                   const SizedBox(height: 10),
                   UserDataListTile(
                     tile: "Apellidos",
-                    data: state.userData.names,
+                    data: state.userData.lastNames,
                   ),
                   const SizedBox(height: 10),
                   UserDataListTile(
                     tile: "Fecha de nacimiento",
-                    data: state.userData.names,
+                    data: state.userData.dateOfBirth,
                   ),
                   const SizedBox(height: 10),
                   Column(

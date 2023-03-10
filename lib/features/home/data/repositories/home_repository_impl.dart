@@ -14,9 +14,9 @@ class HomeRepositoryImpl extends HomeRepository {
   Future<Either<Failure, GetUserDataResponse>> getUserData(
       {required params}) async {
     try {
-      final result = await homeDataSource.getUserData(params: params);
+      final result = await homeDataSource.getUserData(userEmail: params);
       return Right(result);
-    } on RegisterExeption catch (e) {
+    } on HomeExeption catch (e) {
       return Left(RegisterFailure(message: e.message));
     }
   }
@@ -24,9 +24,9 @@ class HomeRepositoryImpl extends HomeRepository {
   @override
   Future<Either<Failure, bool>> signOut({required params}) async {
     try {
-      final result = await homeDataSource.signOut(params: params);
+      final result = await homeDataSource.signOut(userEmail: params);
       return Right(result);
-    } on RegisterExeption catch (e) {
+    } on HomeExeption catch (e) {
       return Left(RegisterFailure(message: e.message));
     }
   }

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:dvp_test/navigator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:dvp_test/core/use_case/use_case.dart';
 import 'package:dvp_test/core/singletons/user_data.dart';
 import 'package:dvp_test/core/utils/in_app_notification.dart';
 import 'package:dvp_test/features/home/domain/usecases/sign_out_use_case.dart';
 import 'package:dvp_test/features/home/domain/usecases/get_user_data_use_case.dart';
-
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
@@ -18,17 +16,17 @@ class HomeCubit extends Cubit<HomeState> {
     required this.signOutUseCase,
   }) : super(HomeState.initial());
 
-  Future<void> onLoadPage() async {
+  Future<void> onLoadPage(Map<String, dynamic> params) async {
     emit(state.copyWith(
       loadingPage: true,
       dataError: false,
     ));
-    await getUserData();
+    await getUserData(params["email"]);
     emit(state.copyWith(loadingPage: false));
   }
 
-  Future<void> getUserData() async {
-    final result = await getUserDataUseCase(NoParams());
+  Future<void> getUserData(String userEmail) async {
+    final result = await getUserDataUseCase(userEmail);
     result.fold(
       (l) => emit(state.copyWith(dataError: true)),
       (r) {
@@ -39,6 +37,7 @@ class HomeCubit extends Cubit<HomeState> {
               lastNames: r.lastNames,
               dateOfBirth: r.dateOfBirth,
               addresses: r.addresses,
+              email: r.email,
             ),
           ),
         );
@@ -47,7 +46,7 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   Future<void> signOut(BuildContext? context) async {
-    final result = await signOutUseCase(NoParams());
+    final result = await signOutUseCase(state.userData.email);
     result.fold(
       (l) => InAppNotification.show(
         message: "Intenta nuevamente",
@@ -55,7 +54,7 @@ class HomeCubit extends Cubit<HomeState> {
       ),
       (r) {
         if (context != null) {
-          AppNavigator.pushNamedAndRemoveUntil(Routes.register);
+          AppNavigator.pushNamedAndRemoveUntil(Routes.login);
         }
       },
     );

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:dvp_test/core/errors/exceptions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dvp_test/features/register/data/models/register_data_body.dart';
@@ -14,12 +15,11 @@ class RegisterDataSourceImpl extends RegisterDataSource {
   @override
   Future<bool> registerUserData({required registerData}) async {
     try {
-      await sharedPreferences.setString("names", registerData.names);
-      await sharedPreferences.setString("lastNames", registerData.lastName);
+      final String registerDataEnconded = json.encode(registerData.toJson());
       await sharedPreferences.setString(
-          "dateOfBirth", registerData.dateOfBirth);
-      await sharedPreferences.setStringList(
-          "addresses", registerData.addresses);
+        registerData.email,
+        registerDataEnconded,
+      );
       return true;
     } catch (e) {
       throw RegisterExeption(message: "Register user data error");
