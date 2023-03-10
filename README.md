@@ -1,16 +1,14 @@
 # dvp_test
 
-A new Flutter project.
+Prueba técnica de ingreso a Double V Partners
 
-## Getting Started
+Versión de flutter utilizada: 3.7.7 stable
+Versión de dart utilizada: Dart 2.19.4 DevTools 2.20.1
 
-This project is a starting point for a Flutter application.
+Descripción de la app:
+- La aplicación consta de 3 vistas: Inicio de sesión, Registro y home.
+- Los datos de los usuarios se almacenan en el shared preferences.
+- Tets unitarios de las funciones relevantes.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Obvervaciones:
+- Se creó un archivo keys.dart para almacernas las keys privadas importantes. Este archivo de deja en el repositorio para que se puedan realizar las pruebas.
