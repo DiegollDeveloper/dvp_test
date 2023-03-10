@@ -39,7 +39,10 @@ class CustomTextField extends StatelessWidget {
                 ? TextInputType.emailAddress
                 : TextInputType.visiblePassword,
         obscureText: hidePassword,
+        maxLength: 40,
+        textCapitalization: TextCapitalization.words,
         decoration: InputDecoration(
+          counterText: "",
           labelText: label == "" ? null : label,
           labelStyle: TextStyle(
             color: Colors.grey[700]!,
