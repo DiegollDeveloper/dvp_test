@@ -22,14 +22,15 @@ class HomeScreen extends BaseScreen<HomeState, HomeCubit> {
   @override
   Widget buildScreen(BuildContext context, HomeCubit bloc, HomeState state) {
     return Scaffold(
-        backgroundColor: AppColors.background,
-        body: WillPopScope(
-          onWillPop: () async => false,
-          child: (state.dataError)
-              ? DataErrorScreen(
-                  onRetry: () async => bloc.onLoadPage(params),
-                )
-              : Padding(
+      backgroundColor: AppColors.background,
+      body: WillPopScope(
+        onWillPop: () async => false,
+        child: (state.dataError)
+            ? DataErrorScreen(
+                onRetry: () async => bloc.onLoadPage(params),
+              )
+            : SingleChildScrollView(
+                child: Padding(
                   padding: EdgeInsets.only(
                     top: ScreenSize.height(context) * 0.1,
                     bottom: ScreenSize.height(context) * 0.05,
@@ -99,6 +100,7 @@ class HomeScreen extends BaseScreen<HomeState, HomeCubit> {
                           ListView.builder(
                             padding: EdgeInsets.zero,
                             shrinkWrap: true,
+                            primary: false,
                             itemCount: state.userData.addresses.length,
                             itemBuilder: (context, index) => Text(
                               state.userData.addresses[index],
@@ -111,7 +113,12 @@ class HomeScreen extends BaseScreen<HomeState, HomeCubit> {
                           ),
                         ],
                       ),
-                      const Spacer(),
+                      const SizedBox(height: 10),
+                      UserDataListTile(
+                        tile: "Correo",
+                        data: state.userData.email,
+                      ),
+                      SizedBox(height: ScreenSize.height(context) * 0.2),
                       CustomButton(
                         loading: false,
                         text: "Cerrar sesión",
@@ -120,6 +127,8 @@ class HomeScreen extends BaseScreen<HomeState, HomeCubit> {
                     ],
                   ),
                 ),
-        ));
+              ),
+      ),
+    );
   }
 }

@@ -20,6 +20,7 @@ class RegisterDataSourceImpl extends RegisterDataSource {
         registerData.email,
         registerDataEnconded,
       );
+      await sharedPreferences.setString("recentEmail", registerData.email);
       return true;
     } catch (e) {
       throw RegisterExeption(message: "Register user data error");
