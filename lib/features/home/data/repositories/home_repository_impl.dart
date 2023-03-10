@@ -17,7 +17,7 @@ class HomeRepositoryImpl extends HomeRepository {
       final result = await homeDataSource.getUserData(userEmail: params);
       return Right(result);
     } on HomeExeption catch (e) {
-      return Left(RegisterFailure(message: e.message));
+      return Left(HomeFailure(message: e.message));
     }
   }
 
@@ -27,7 +27,7 @@ class HomeRepositoryImpl extends HomeRepository {
       final result = await homeDataSource.signOut(userEmail: params);
       return Right(result);
     } on HomeExeption catch (e) {
-      return Left(RegisterFailure(message: e.message));
+      return Left(HomeFailure(message: e.message));
     }
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:collection/collection.dart';
 import 'package:crypto_simple/crypto_simple.dart';
 import 'package:dvp_test/features/register/data/models/address_model.dart';
 
@@ -33,5 +34,10 @@ class CommonFunctions {
 
   static void unfocusAllFields(BuildContext? context) {
     if (context != null) FocusScope.of(context).unfocus();
+  }
+
+  static bool compareLists(List a, List b) {
+    Function eq = const ListEquality().equals;
+    return eq(a, b);
   }
 }

@@ -8,12 +8,12 @@ import 'package:dvp_test/features/home/domain/usecases/get_user_data_use_case.da
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  GetUserDataUseCase getUserDataUseCase;
-  SignOutUseCase signOutUseCase;
+  GetUserDataUseCase? getUserDataUseCase;
+  SignOutUseCase? signOutUseCase;
 
   HomeCubit({
-    required this.getUserDataUseCase,
-    required this.signOutUseCase,
+    this.getUserDataUseCase,
+    this.signOutUseCase,
   }) : super(HomeState.initial());
 
   Future<void> onLoadPage(Map<String, dynamic> params) async {
@@ -26,7 +26,7 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   Future<void> getUserData(String userEmail) async {
-    final result = await getUserDataUseCase(userEmail);
+    final result = await getUserDataUseCase!(userEmail);
     result.fold(
       (l) => emit(state.copyWith(dataError: true)),
       (r) {
@@ -46,7 +46,7 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   Future<void> signOut(BuildContext? context) async {
-    final result = await signOutUseCase(state.userData.email);
+    final result = await signOutUseCase!(state.userData.email);
     result.fold(
       (l) => InAppNotification.show(
         message: "Intenta nuevamente",

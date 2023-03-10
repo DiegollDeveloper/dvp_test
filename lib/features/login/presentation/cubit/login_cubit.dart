@@ -15,14 +15,14 @@ import 'package:dvp_test/features/login/domain/usecases/fetch_registered_email_u
 part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
-  final SignInUseCase signInUseCase;
-  final FetchRegisteredEmailUseCase fetchRegisteredEmailUseCase;
-  final FetchRecentEmailUseCase fetchRecentEmailUseCase;
+  final SignInUseCase? signInUseCase;
+  final FetchRegisteredEmailUseCase? fetchRegisteredEmailUseCase;
+  final FetchRecentEmailUseCase? fetchRecentEmailUseCase;
 
   LoginCubit({
-    required this.signInUseCase,
-    required this.fetchRegisteredEmailUseCase,
-    required this.fetchRecentEmailUseCase,
+    this.signInUseCase,
+    this.fetchRegisteredEmailUseCase,
+    this.fetchRecentEmailUseCase,
   }) : super(LoginState.initial());
 
   void onLoadPage() {
@@ -65,7 +65,7 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   Future<void> fetchRecentEmail() async {
-    final result = await fetchRecentEmailUseCase(NoParams());
+    final result = await fetchRecentEmailUseCase!(NoParams());
     result.fold(
       (l) => null,
       (r) {
@@ -77,7 +77,7 @@ class LoginCubit extends Cubit<LoginState> {
 
   Future<bool?> fetchRegisteredEmail(BuildContext? context) async {
     final result =
-        await fetchRegisteredEmailUseCase(state.emailController.text);
+        await fetchRegisteredEmailUseCase!(state.emailController.text);
     return result.fold(
       (l) {
         InAppNotification.show(
@@ -104,7 +104,7 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   Future<void> signIn(BuildContext? context) async {
-    final result = await signInUseCase(
+    final result = await signInUseCase!(
       SignInDataBody(
         email: state.emailController.text,
         password: state.passwordController.text,
