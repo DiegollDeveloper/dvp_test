@@ -88,7 +88,7 @@ class HomeScreen extends BaseScreen<HomeState, HomeCubit> {
                         children: [
                           Text(
                             state.userData.addresses.length == 1
-                                ? "Direccion"
+                                ? "Dirección"
                                 : "Direcciones",
                             style: TextStyle(
                               color: Colors.black,
