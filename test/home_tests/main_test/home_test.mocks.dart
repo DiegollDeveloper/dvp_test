@@ -13,6 +13,8 @@ import 'package:dvp_test/features/home/domain/repositories/home_repository.dart'
     as _i2;
 import 'package:dvp_test/features/home/domain/usecases/get_user_data_use_case.dart'
     as _i4;
+import 'package:dvp_test/features/home/domain/usecases/sign_out_use_case.dart'
+    as _i8;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -82,4 +84,38 @@ class MockGetUserDataUseCase extends _i1.Mock
           ),
         )),
       ) as _i5.Future<_i3.Either<_i6.Failure, _i7.GetUserDataResponse>>);
+}
+
+/// A class which mocks [SignOutUseCase].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockSignOutUseCase extends _i1.Mock implements _i8.SignOutUseCase {
+  MockSignOutUseCase() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i2.HomeRepository get homeRepository => (super.noSuchMethod(
+        Invocation.getter(#homeRepository),
+        returnValue: _FakeHomeRepository_0(
+          this,
+          Invocation.getter(#homeRepository),
+        ),
+      ) as _i2.HomeRepository);
+  @override
+  _i5.Future<_i3.Either<_i6.Failure, bool>> call(String? params) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #call,
+          [params],
+        ),
+        returnValue: _i5.Future<_i3.Either<_i6.Failure, bool>>.value(
+            _FakeEither_1<_i6.Failure, bool>(
+          this,
+          Invocation.method(
+            #call,
+            [params],
+          ),
+        )),
+      ) as _i5.Future<_i3.Either<_i6.Failure, bool>>);
 }

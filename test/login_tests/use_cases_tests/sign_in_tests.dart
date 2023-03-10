@@ -7,7 +7,7 @@ import 'package:dvp_test/features/login/presentation/cubit/login_cubit.dart';
 
 void fetchRecentEmailTests() {
   group(
-    "Get user data",
+    "Fetch recent email",
     () {
       late LoginCubit loginCubit;
       late MockFetchRecentEmailUseCase mockFetchRecentEmailUseCase;
@@ -19,7 +19,7 @@ void fetchRecentEmailTests() {
       });
 
       test(
-        "Get user data test (Success)",
+        "Fetch recent email test (Success)",
         () async {
           when(mockFetchRecentEmailUseCase(any)).thenAnswer(
             (_) async => const Right(
@@ -34,7 +34,7 @@ void fetchRecentEmailTests() {
       );
 
       test(
-        "Get user data test (fail)",
+        "Fetch recent email test (fail)",
         () async {
           when(mockFetchRecentEmailUseCase(any)).thenAnswer(
             (_) async => Left(

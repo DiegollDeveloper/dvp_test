@@ -7,18 +7,10 @@ import 'dart:async' as _i5;
 
 import 'package:dartz/dartz.dart' as _i3;
 import 'package:dvp_test/core/errors/failures.dart' as _i6;
-import 'package:dvp_test/core/use_case/use_case.dart' as _i11;
-import 'package:dvp_test/features/login/data/models/sign_in_data_body.dart'
-    as _i8;
-import 'package:dvp_test/features/login/data/models/sign_in_data_response.dart'
-    as _i7;
+import 'package:dvp_test/core/use_case/use_case.dart' as _i7;
 import 'package:dvp_test/features/login/domain/repositories/login_repositoy.dart'
     as _i2;
 import 'package:dvp_test/features/login/domain/usecases/fetch_recent_email_use_case.dart'
-    as _i10;
-import 'package:dvp_test/features/login/domain/usecases/fetch_registered_email_use_case.dart'
-    as _i9;
-import 'package:dvp_test/features/login/domain/usecases/sign_in_use_case.dart'
     as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -54,100 +46,11 @@ class _FakeEither_1<L, R> extends _i1.SmartFake implements _i3.Either<L, R> {
         );
 }
 
-/// A class which mocks [SignInUseCase].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockSignInUseCase extends _i1.Mock implements _i4.SignInUseCase {
-  MockSignInUseCase() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  _i2.LoginRepository get loginRepository => (super.noSuchMethod(
-        Invocation.getter(#loginRepository),
-        returnValue: _FakeLoginRepository_0(
-          this,
-          Invocation.getter(#loginRepository),
-        ),
-      ) as _i2.LoginRepository);
-  @override
-  set loginRepository(_i2.LoginRepository? _loginRepository) =>
-      super.noSuchMethod(
-        Invocation.setter(
-          #loginRepository,
-          _loginRepository,
-        ),
-        returnValueForMissingStub: null,
-      );
-  @override
-  _i5.Future<_i3.Either<_i6.Failure, _i7.SignInDataResponse>> call(
-          _i8.SignInDataBody? params) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #call,
-          [params],
-        ),
-        returnValue:
-            _i5.Future<_i3.Either<_i6.Failure, _i7.SignInDataResponse>>.value(
-                _FakeEither_1<_i6.Failure, _i7.SignInDataResponse>(
-          this,
-          Invocation.method(
-            #call,
-            [params],
-          ),
-        )),
-      ) as _i5.Future<_i3.Either<_i6.Failure, _i7.SignInDataResponse>>);
-}
-
-/// A class which mocks [FetchRegisteredEmailUseCase].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockFetchRegisteredEmailUseCase extends _i1.Mock
-    implements _i9.FetchRegisteredEmailUseCase {
-  MockFetchRegisteredEmailUseCase() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  _i2.LoginRepository get loginRepository => (super.noSuchMethod(
-        Invocation.getter(#loginRepository),
-        returnValue: _FakeLoginRepository_0(
-          this,
-          Invocation.getter(#loginRepository),
-        ),
-      ) as _i2.LoginRepository);
-  @override
-  set loginRepository(_i2.LoginRepository? _loginRepository) =>
-      super.noSuchMethod(
-        Invocation.setter(
-          #loginRepository,
-          _loginRepository,
-        ),
-        returnValueForMissingStub: null,
-      );
-  @override
-  _i5.Future<_i3.Either<_i6.Failure, bool>> call(String? params) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #call,
-          [params],
-        ),
-        returnValue: _i5.Future<_i3.Either<_i6.Failure, bool>>.value(
-            _FakeEither_1<_i6.Failure, bool>(
-          this,
-          Invocation.method(
-            #call,
-            [params],
-          ),
-        )),
-      ) as _i5.Future<_i3.Either<_i6.Failure, bool>>);
-}
-
 /// A class which mocks [FetchRecentEmailUseCase].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockFetchRecentEmailUseCase extends _i1.Mock
-    implements _i10.FetchRecentEmailUseCase {
+    implements _i4.FetchRecentEmailUseCase {
   MockFetchRecentEmailUseCase() {
     _i1.throwOnMissingStub(this);
   }
@@ -170,7 +73,7 @@ class MockFetchRecentEmailUseCase extends _i1.Mock
         returnValueForMissingStub: null,
       );
   @override
-  _i5.Future<_i3.Either<_i6.Failure, String>> call(_i11.NoParams? params) =>
+  _i5.Future<_i3.Either<_i6.Failure, String>> call(_i7.NoParams? params) =>
       (super.noSuchMethod(
         Invocation.method(
           #call,

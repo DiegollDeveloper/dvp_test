@@ -53,10 +53,15 @@ class HomeCubit extends Cubit<HomeState> {
         type: NotificationType.error,
       ),
       (r) {
+        state.userData.clearData();
         if (context != null) {
-          AppNavigator.pushNamedAndRemoveUntil(Routes.login);
+          goToLoginPage();
         }
       },
     );
+  }
+
+  void goToLoginPage() {
+    AppNavigator.pushNamedAndRemoveUntil(Routes.login);
   }
 }
