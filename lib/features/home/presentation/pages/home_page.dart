@@ -1,3 +1,4 @@
+import 'package:dvp_test/core/utils/app_colors.dart';
 import 'package:dvp_test/core/utils/screen_size.dart';
 import 'package:dvp_test/core/widgets/custom_button.dart';
 import 'package:dvp_test/features/home/presentation/pages/data_error_page.dart';
@@ -21,6 +22,7 @@ class HomeScreen extends BaseScreen<HomeState, HomeCubit> {
   @override
   Widget buildScreen(BuildContext context, HomeCubit bloc, HomeState state) {
     return Scaffold(
+      backgroundColor: AppColors.background,
       body: (state.dataError)
           ? DataErrorScreen(
               onRetry: () async => bloc.onLoadPage(params),
@@ -48,7 +50,7 @@ class HomeScreen extends BaseScreen<HomeState, HomeCubit> {
                         TextSpan(
                           text: state.userData.names,
                           style: TextStyle(
-                            color: Colors.purple,
+                            color: AppColors.primary,
                             fontWeight: FontWeight.bold,
                             fontSize: ScreenSize.width(context) * 0.06,
                           ),

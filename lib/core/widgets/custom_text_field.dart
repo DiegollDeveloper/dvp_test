@@ -1,3 +1,5 @@
+import 'package:dvp_test/core/utils/app_colors.dart';
+import 'package:dvp_test/core/utils/common_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:dvp_test/core/utils/screen_size.dart';
 
@@ -25,21 +27,12 @@ class CustomTextField extends StatelessWidget {
       padding: const EdgeInsets.symmetric(
         horizontal: 10,
       ),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey[300]!,
-            blurRadius: 0.5,
-          )
-        ],
-      ),
+      decoration: CommonConstants.fieldsDecoration,
       child: TextField(
         onEditingComplete: () => focus.nextFocus(),
         controller: controller,
         focusNode: focus,
-        cursorColor: Colors.purple,
+        cursorColor: AppColors.primary,
         keyboardType: type == TextFieldType.text
             ? TextInputType.text
             : type == TextFieldType.email
@@ -52,8 +45,8 @@ class CustomTextField extends StatelessWidget {
             color: Colors.grey[700]!,
             fontSize: ScreenSize.width(context) * 0.041,
           ),
-          floatingLabelStyle: const TextStyle(
-            color: Colors.purple,
+          floatingLabelStyle: TextStyle(
+            color: AppColors.primary,
           ),
           border: InputBorder.none,
           suffixIcon: type == TextFieldType.password

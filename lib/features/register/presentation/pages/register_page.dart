@@ -1,3 +1,4 @@
+import 'package:dvp_test/core/utils/app_colors.dart';
 import 'package:dvp_test/core/utils/common_functions.dart';
 import 'package:dvp_test/core/widgets/custom_button.dart';
 import 'package:dvp_test/core/widgets/custom_text_field.dart';
@@ -19,7 +20,7 @@ class RegisterPage extends BaseScreen<RegisterState, RegisterCubit> {
   Widget buildScreen(
       BuildContext context, RegisterCubit bloc, RegisterState state) {
     return Scaffold(
-      backgroundColor: Colors.grey[300]!,
+      backgroundColor: AppColors.background,
       body: GestureDetector(
         onTap: () => CommonFunctions.unfocusAllFields(context),
         child: SingleChildScrollView(
@@ -37,9 +38,9 @@ class RegisterPage extends BaseScreen<RegisterState, RegisterCubit> {
                   padding: EdgeInsets.zero,
                   visualDensity: VisualDensity.compact,
                   onPressed: () => AppNavigator.pop(),
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.arrow_back_ios,
-                    color: Colors.purple,
+                    color: AppColors.primary,
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -48,7 +49,7 @@ class RegisterPage extends BaseScreen<RegisterState, RegisterCubit> {
                   style: TextStyle(
                     fontSize: ScreenSize.width(context) * 0.075,
                     fontWeight: FontWeight.bold,
-                    color: Colors.purple,
+                    color: AppColors.primary,
                   ),
                 ),
                 const SizedBox(height: 40),
@@ -101,9 +102,9 @@ class RegisterPage extends BaseScreen<RegisterState, RegisterCubit> {
                           IconButton(
                             onPressed: () =>
                                 bloc.onRemoveAddressButtonTap(index),
-                            icon: const Icon(
+                            icon: Icon(
                               Icons.remove,
-                              color: Colors.purple,
+                              color: AppColors.primary,
                             ),
                           )
                       ],
@@ -120,7 +121,7 @@ class RegisterPage extends BaseScreen<RegisterState, RegisterCubit> {
                         child: Text(
                           "Añadir nueva dirección",
                           style: TextStyle(
-                            color: Colors.purple,
+                            color: AppColors.primary,
                             fontSize: ScreenSize.width(context) * 0.04,
                           ),
                         ),

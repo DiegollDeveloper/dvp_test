@@ -31,7 +31,7 @@ class CommonFunctions {
     return CryptoSimple.instance.decrypt(encryptedText: encryptedText);
   }
 
-  static void unfocusAllFields(BuildContext context) {
-    FocusScope.of(context).unfocus();
+  static void unfocusAllFields(BuildContext? context) {
+    if (context != null) FocusScope.of(context).unfocus();
   }
 }

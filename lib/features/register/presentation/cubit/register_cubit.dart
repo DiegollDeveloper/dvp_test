@@ -25,6 +25,7 @@ class RegisterCubit extends Cubit<RegisterState> {
   void onLoadPage() {}
 
   Future<void> selectDateOfBirth(BuildContext context) async {
+    CommonFunctions.unfocusAllFields(context);
     final DateTime? selectedDate = await showDatePicker(
       context: context,
       initialDate: state.dateSelected ? state.dateOfBirth : DateTime.now(),
@@ -182,6 +183,7 @@ class RegisterCubit extends Cubit<RegisterState> {
   }
 
   Future<void> onRegisterButtonTap(BuildContext? context) async {
+    CommonFunctions.unfocusAllFields(context);
     if (!validateRegisterFields(context)) return;
     if (await fetchRegisteredEmail(context) == true) return;
     registerUserData(context);

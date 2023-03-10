@@ -1,3 +1,4 @@
+import 'package:dvp_test/core/utils/app_colors.dart';
 import 'package:dvp_test/core/utils/common_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
@@ -17,7 +18,7 @@ class LoginPage extends BaseScreen<LoginState, LoginCubit> {
   @override
   Widget buildScreen(BuildContext context, LoginCubit bloc, LoginState state) =>
       Scaffold(
-        backgroundColor: Colors.grey[300],
+        backgroundColor: AppColors.background,
         body: GestureDetector(
           onTap: () => CommonFunctions.unfocusAllFields(context),
           child: SingleChildScrollView(
@@ -32,7 +33,7 @@ class LoginPage extends BaseScreen<LoginState, LoginCubit> {
                 children: [
                   Icon(
                     Icons.email,
-                    color: Colors.purple,
+                    color: AppColors.primary,
                     size: ScreenSize.width(context) * 0.4,
                   ),
                   const SizedBox(height: 20),
@@ -75,8 +76,8 @@ class LoginPage extends BaseScreen<LoginState, LoginCubit> {
                           recognizer: TapGestureRecognizer()
                             ..onTap = () => bloc.onRegisterTextTap(),
                           text: "REGISTRARME",
-                          style: const TextStyle(
-                            color: Colors.purple,
+                          style: TextStyle(
+                            color: AppColors.primary,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

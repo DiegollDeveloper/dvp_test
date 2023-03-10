@@ -1,3 +1,4 @@
+import 'package:dvp_test/core/utils/app_colors.dart';
 import 'package:dvp_test/core/utils/screen_size.dart';
 import 'package:flutter/material.dart';
 
@@ -21,10 +22,10 @@ class CustomButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: loading ? null : () => onTap(),
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.purple,
+          backgroundColor: AppColors.primary,
         ),
         child: loading
-            ? const CircularProgressIndicator(color: Colors.purple)
+            ? CircularProgressIndicator(color: AppColors.primary)
             : Text(
                 text,
                 style: TextStyle(

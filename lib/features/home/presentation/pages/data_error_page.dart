@@ -1,3 +1,4 @@
+import 'package:dvp_test/core/utils/app_colors.dart';
 import 'package:dvp_test/core/utils/screen_size.dart';
 import 'package:dvp_test/core/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class DataErrorScreen extends StatelessWidget {
           RichText(
             text: TextSpan(
               style: TextStyle(
-                color: Colors.purple,
+                color: AppColors.primary,
                 fontSize: ScreenSize.width(context) * 0.046,
                 letterSpacing: 0.5,
               ),

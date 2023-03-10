@@ -1,3 +1,5 @@
+import 'package:dvp_test/core/utils/app_colors.dart';
+import 'package:dvp_test/core/utils/common_constants.dart';
 import 'package:dvp_test/core/utils/screen_size.dart';
 import 'package:flutter/material.dart';
 
@@ -23,16 +25,7 @@ class CustomDateField extends StatelessWidget {
           horizontal: 10,
         ),
         alignment: Alignment.centerLeft,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey[300]!,
-              blurRadius: 0.5,
-            )
-          ],
-        ),
+        decoration: CommonConstants.fieldsDecoration,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,7 +33,7 @@ class CustomDateField extends StatelessWidget {
             Text(
               label,
               style: TextStyle(
-                color: date != null ? Colors.purple : Colors.grey[700]!,
+                color: date != null ? AppColors.primary : Colors.grey[700]!,
                 fontSize: ScreenSize.width(context) *
                     ((date != null) ? 0.034 : 0.041),
               ),

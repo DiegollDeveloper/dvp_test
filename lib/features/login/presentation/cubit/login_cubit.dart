@@ -1,14 +1,15 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:dvp_test/core/utils/common_constants.dart';
-import 'package:dvp_test/core/utils/in_app_notification.dart';
-import 'package:dvp_test/features/login/data/models/sign_in_data_body.dart';
-import 'package:dvp_test/features/login/data/models/sign_in_data_response.dart';
-import 'package:dvp_test/features/login/domain/usecases/fetch_registered_email_use_case.dart';
+import 'package:dvp_test/core/utils/common_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:dvp_test/navigator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:dvp_test/core/utils/common_constants.dart';
+import 'package:dvp_test/core/utils/in_app_notification.dart';
+import 'package:dvp_test/features/login/data/models/sign_in_data_body.dart';
 import 'package:dvp_test/features/login/domain/usecases/sign_in_use_case.dart';
+import 'package:dvp_test/features/login/data/models/sign_in_data_response.dart';
+import 'package:dvp_test/features/login/domain/usecases/fetch_registered_email_use_case.dart';
 
 part 'login_state.dart';
 
@@ -93,7 +94,7 @@ class LoginCubit extends Cubit<LoginState> {
         password: state.passwordController.text,
       ),
     );
-
+    emit(state.copyWith(joinning: false));
     result.fold(
       (l) => InAppNotification.show(
         title: "No se puedo iniciar sesión",
@@ -108,7 +109,7 @@ class LoginCubit extends Cubit<LoginState> {
             type: NotificationType.error,
           );
           return;
-        } else {}
+        }
         if (context != null) {
           goToHomePage();
         }
@@ -117,8 +118,13 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   Future<void> onSignInButtonTap(BuildContext? context) async {
-    if (!validateSignInFields(context)) return;
-    if (await fetchRegisteredEmail(context) == false) return;
+    CommonFunctions.unfocusAllFields(context);
+    emit(state.copyWith(joinning: true));
+    if (!validateSignInFields(context) ||
+        await fetchRegisteredEmail(context) == false) {
+      emit(state.copyWith(joinning: false));
+      return;
+    }
     signIn(context);
   }
 
